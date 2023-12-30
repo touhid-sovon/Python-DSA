@@ -65,6 +65,42 @@ class DLinkedList:
                 tempNode.next = newNode
                 newNode.next = nextNode
 
+    def deleteByindex(self,location):
+        if self.head == None:
+            return "The List is empty"
+        else:
+            if location == 0:
+                if self.head == self.tail:
+                    self.head = None
+                    self.tail = None
+                else:
+                    self.head = self.head.next
+                    self.head.next.prev = None
+
+            if location == self.length()-1:
+                if self.head == self.tail:
+                    self.head = None
+                    self.tail = None
+                else:
+                    node = self.head
+                    index = 0
+                    while index < location-1:
+                        node = node.next
+                        index += 1
+                    self.tail = node
+                    node.next = None
+            else:
+                node = self.head
+                index = 0
+                while index < location - 1:
+                    node = node.next
+                    index += 1
+                nextNode = node.next.next
+                node.next = nextNode
+                nextNode.prev = node
+
+
+
 
 
 dll = DLinkedList()
@@ -79,3 +115,10 @@ dll.insertionByindex(3,3)
 print([node.value for node in dll])
 
 print(dll.length())
+
+
+'''Delete By index '''
+
+dll.deleteByindex(1)
+
+print([node.value for node in dll])
