@@ -4,7 +4,7 @@ class Node:
         self.next = None
         self.prev = None
 
-class DLinkedList:
+class CDLinkedList:
     def __init__(self):
         self.head = None
         self.tail = None
@@ -14,116 +14,141 @@ class DLinkedList:
         while node:
             yield node
             node = node.next
-
+            if node == self.tail.next:
+                break
     def length(self):
         node = self.head
         index = 0
         while node:
             node = node.next
             index += 1
-        return index
+            if node == self.tail.next:
+                return index
+
+
 
     def insert(self,value):
         newNode = Node(value)
         if self.head == None:
             self.head = newNode
             self.tail = newNode
+            newNode.next = newNode
+            newNode.prev = newNode
         else:
+            newNode.next = self.head
+            self.head.prev = newNode
+            self.head = newNode
             newNode.prev = self.tail
             self.tail.next = newNode
-            self.tail = newNode
-            newNode.next = None
 
-
-    def insertionByindex(self,value,location):
+    def insertByindex(self,value,location):
         newNode = Node(value)
         if self.head == None:
             self.head = newNode
             self.tail = newNode
+            newNode.next = newNode
+            newNode.prev = newNode
         else:
             if location == 0:
-                self.head.next.prev = newNode
                 newNode.next = self.head
+                newNode.prev = self.tail
+                self.head.prev = newNode
                 self.head = newNode
-                newNode.prev = None
+                self.tail.next = newNode
 
-            if location == self.length():
-                newNode.next = None
+            elif location == self.length():
+                self.head.prev = newNode
                 newNode.prev = self.tail
                 self.tail.next = newNode
                 self.tail = newNode
-
+                newNode.next = self.head
             else:
                 tempNode = self.head
                 index = 0
-                while index < location-1:
+                while index < location -1 :
                     tempNode = tempNode.next
                     index += 1
                 newNode.prev = tempNode
                 nextNode = tempNode.next
-                nextNode.prev = newNode
                 tempNode.next = newNode
                 newNode.next = nextNode
+                nextNode.prev = newNode
 
     def deleteByindex(self,location):
         if self.head == None:
-            return "The List is empty"
+            return []
         else:
             if location == 0:
-                print('Location = 0')
                 if self.head == self.tail:
                     self.head = None
                     self.tail = None
                 else:
-                    print('else case of location 0')
                     self.head = self.head.next
-                    self.head.prev = None
-
+                    self.head.prev = self.tail
+                    self.tail.next = self.head
             elif location == self.length()-1:
                 if self.head == self.tail:
                     self.head = None
                     self.tail = None
                 else:
-                    node = self.head
-                    index = 0
-                    while index < location-1:
-                        node = node.next
-                        index += 1
-                    self.tail = node
-                    node.next = None
+                    self.tail = self.tail.prev
+                    self.head.prev = self.tail
+                    self.tail.next = self.head
             else:
-                print('Location = middle')
-                node = self.head
+                lastNode = self.head
                 index = 0
-                while index < location - 1:
-                    node = node.next
+                while index < location-1:
+                    lastNode = lastNode.next
                     index += 1
-                nextNode = node.next.next
-                node.next = nextNode
-                nextNode.prev = node
+                nextNode = lastNode.next.next
+                nextNode.prev = lastNode
+                lastNode.next = nextNode
 
 
 
 
 
-dll = DLinkedList()
-dll.insertionByindex(0,0)
-dll.insertionByindex(1,1)
-dll.insert(2)
-dll.insert(3)
-dll.insert(4)
-
-print([node.value for node in dll])
-
-print(dll.length())
 
 
-'''Delete By index '''
+
+
+
+
+
+
+cdll = CDLinkedList()
+'''Insert by value'''
+cdll.insert(3)
+cdll.insert(2)
+cdll.insert(1)
+cdll.insert(0)
+
+'''Insert By index'''
+cdll.insertByindex(4,0)
+cdll.insertByindex(5,0)
+cdll.insertByindex(6,0)
+
+
+
+''' length of linked list '''
+# print(cdll.length())
+
+cdll.insertByindex(100,7)
+cdll.insertByindex(123,3)
+print([node.value for node in cdll])
+
+cdll.deleteByindex(0)
+cdll.deleteByindex(7)
+cdll.deleteByindex(2)
+
+
+
 print('After Deletion')
-dll.deleteByindex(0)
-print([node.value for node in dll])
+
+print([node.value for node in cdll])
 
 print('Prev values of linked list')
-print([node.prev.value if node.prev else None for node in dll])
+print([node.prev.value if node.prev else None for node in cdll])
 print('Next values of linked list')
-print([node.next.value if node.next else None for node in dll])
+print([node.next.value if node.next else None for node in cdll])
+
