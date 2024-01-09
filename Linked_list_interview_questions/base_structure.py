@@ -30,7 +30,7 @@ class LinkedList:
 
     def __str__(self):
         values = [str(x.value) for x in self]
-        return ','.join(values)
+        return '->'.join(values)
 
     def add(self,value):
         newNode = Node(value)

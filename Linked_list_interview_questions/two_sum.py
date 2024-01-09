@@ -1,14 +1,31 @@
 class Solution:
     def twoSum(self, nums: list[int], target: int) -> list[int]:
         n = len(nums)
-        left = 0
-        right = n-1
-        while left < right:
-            if nums[left] + nums[right] == target:
-                print(f'{left},{right}')
-                return
+        tempHash = {}
+
+        # build the hash table
+        for i in range(n):
+            tempHash[nums[i]]=i
+
+        # finding the remainder
+        for i in range(n):
+            remainder = target - nums[i]
+
+            if remainder in tempHash and tempHash[remainder] != i :
+                return [i,tempHash[remainder]]
+
+class Solution2:
+    def twoSum(self, nums: list[int], target: int) -> list[int]:
+        n = len(nums)
+        tempHash = {}
+
+        for i in range(n):
+            remainder = target - nums[i]
+            if remainder in tempHash:
+                return [tempHash[remainder],i]
+            tempHash[nums[i]] = i
 
 
-solution = Solution()
-# print(solution.twoSum([2,7,11,15],9))
-solution.twoSum([2,7,11,15],9)
+
+solution = Solution2()
+print(solution.twoSum([3,2,4],6))
