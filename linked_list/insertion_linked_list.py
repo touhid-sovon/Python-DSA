@@ -8,11 +8,11 @@ class SLinkedList:
         self.head = None
         self.tail = None
 
-        def __iter__(self):
-            node = self.head
-            while node:
-                yield node
-                node = node.next
+    def __iter__(self):
+        node = self.head
+        while node:
+            yield node
+            node = node.next
     def insertSLL(self,value,location):
         newNode = Node(value)
         if self.head == None:
