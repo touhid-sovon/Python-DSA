@@ -9,6 +9,11 @@ class TreeNode:
         self.right = None
         self.left = None
 
+    def __str__(self):
+        return self.data
+
+
+
 drinks = TreeNode("Drinks")
 hot = TreeNode("Hot")
 cold = TreeNode("Cold")
@@ -138,7 +143,9 @@ def deepestNode(rootNode):
         if lastNode.right:
             customQ.enqueue(lastNode.right)
 
-    return lastNode.data
+    return lastNode
+
+
 
 def deleteDeepestNode(rootNode):
     if not rootNode:
@@ -147,30 +154,79 @@ def deleteDeepestNode(rootNode):
     customQ = queue.QueueLinkedList()
     customQ.enqueue(rootNode)
     targetNode = deepestNode(rootNode)
-    print("Target Node",targetNode)
 
     while not (customQ.isEmpty()):
         lastNode = customQ.dequeue()
 
+
         if lastNode.left:
             if lastNode.left == targetNode:
-                print("yes")
+                lastNode.left = None
+                return
 
             else:
                 customQ.enqueue(lastNode.left)
         if lastNode.right:
-            if lastNode.right == targetNode:
-                print("Yes")
-                lastNode.data.right = None
+            if lastNode.right is targetNode:
+                lastNode.right = None
+                return
             else:
                 customQ.enqueue(lastNode.right)
 
 
-print("The deepest Node:-- ",deepestNode(drinks))
+# recursive way to delete the deepest node
+# def deleteDeepestNode(rootNode):
+#     if not rootNode:
+#         return None
+#     if not rootNode.left and not rootNode.right:
+#         return None
+#     if not rootNode.right:
+#         rootNode = None
+#         return None
+#     rootNode.right = deleteDeepestNode(rootNode.right)
+#     return rootNode
 
-deleteDeepestNode(drinks)
+# print(deepestNode(drinks))
+# deleteDeepestNode(drinks)
+# levelOrderTraversal(drinks)
+
+def deleteNode(rootNode,node):
+    if not rootNode:
+        return
+
+    customQ = queue.QueueLinkedList()
+    customQ.enqueue(rootNode)
+    replaceNode = deepestNode(rootNode).data
+
+    while not (customQ.isEmpty()):
+        root = customQ.dequeue()
+
+        if root == node:
+            root.data = replaceNode
+            deleteDeepestNode(rootNode)
+            return
+
+        if root.left:
+            customQ.enqueue(root.left)
+
+        if root.right:
+            customQ.enqueue(root.left)
+
+# deleteNode(drinks,hot)
+#
+# levelOrderTraversal(drinks)
+
+def deleteBT(rootNode):
+    rootNode.data = None
+    rootNode.left = None
+    rootNode.right = None
+
+    return
+
+deleteBT(hot)
 
 levelOrderTraversal(drinks)
+
 
 
 
