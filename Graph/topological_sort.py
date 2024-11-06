@@ -34,8 +34,8 @@ def topologicalSort(adjList,V):
 
 if __name__ == "__main__":
     # vertices
-    V = 4
-    edges = [[0,1],[1,2],[3,1],[3,2]]
+    V = 6
+    edges = [[5,0],[5,2],[2,3],[1,3],[4,0],[4,1]]
     #edges = [["A","C"],["C","D"],["C","D"],["D","F"],["F","G"],["E","F"],["B","C"],["B","F"]]
     # graph represenation of an adjacency list
     adjList = [[] for _ in range(V)]
@@ -72,7 +72,7 @@ if __name__ == "__main__":
     #     adjdict[src].append(dst)
     # print(adjdict)
 
-    #topologicalSort(adjList,V)
+    topologicalSort(adjList,V)
 
 
 

@@ -1,7 +1,7 @@
 '''
 
 Matrix BFS:
-Question: Find the length of the shortest path from top left to bottom right of a matrix
+Question: Find the length of the shortest length of path from top left to bottom right of a matrix
 grid = [
     0 0 0 0
     1 1 0 0
